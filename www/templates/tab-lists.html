@@ -1,0 +1,25 @@
+<ion-view view-title="Home">
+  <ion-content class="padding">
+    <div class="list">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input type="tel" placeholder="Id del canal" ng-model="searchBy.channelId" />
+        </label>
+        <button class="button button-small" ng-click="searchBy()">
+          Buscar
+        </button>
+      </div>
+
+      <div ng-if="playlist" class="item item-divider">Your playlists</div>
+      <div ng-if="playlist" class="list">
+        <a class="item item-thumbnail-left" ng-click="showMedia()" ng-repeat="media in playlist">
+          <img src="http://ionicframework.com/img/docs/nevermind.jpg">
+          {{media}}
+          <h2>Nirvana</h2>
+          <p>Nevermind</p>
+        </a>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
+
