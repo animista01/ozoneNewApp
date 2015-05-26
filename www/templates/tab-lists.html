@@ -10,13 +10,11 @@
         </button>
       </div>
 
-      <div ng-if="playlist" class="item item-divider">Your playlists</div>
+      <div ng-if="playlist" class="item item-divider">Tu playlists</div>
       <div ng-if="playlist" class="list">
-        <a class="item item-thumbnail-left" ng-click="showMedia()" ng-repeat="media in playlist">
-          <img src="http://ionicframework.com/img/docs/nevermind.jpg">
-          {{media}}
-          <h2>Nirvana</h2>
-          <p>Nevermind</p>
+        <a class="item item-thumbnail-left" ng-click="showMedia()">
+          <img src="img/logo.png">
+          <h2>{{playlist.name}}</h2>
         </a>
       </div>
     </div>

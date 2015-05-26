@@ -1,6 +1,6 @@
 <ion-slide-box on-double-tap="closeModal()" on-slide-changed="player($index)" class="fullscreen-image" show-pager="false">
-	<ion-slide ng-repeat="res in resources" style="text-align:center;">
-	  <img class="resp-media" id="{{$index}}" ng-if="res.type === 'image'" ng-src="{{res.src}}"/>
-	  <video class="resp-media" id="{{$index}}" ng-if="res.type === 'video'" ng-src="{{res.src}}" controls></video>
+	<ion-slide ng-repeat="res in playlist[searchBy.channelId]" style="text-align:center;">
+	  <img class="resp-media" id="{{$index}}" ng-if="res.tipo === 'image'" ng-src="{{res.path}}"/>
+	  <video class="resp-media" id="{{$index}}" ng-if="res.tipo === 'video'" ng-src="{{res.path | trusted}}" controls></video>
 	</ion-slide>
 </ion-slide-box>

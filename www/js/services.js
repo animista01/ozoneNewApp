@@ -7,7 +7,7 @@ angular.module('scooop.services', [])
       var defer = $q.defer(); 
       $http({
         method: 'GET',
-        url: 'http://localhost:3000/api/channel/'+channelId+''
+        url: 'http://scooop.tv/api/channel/'+channelId+''
       }).success(function (data){
         defer.resolve(data);
       }).error(function (err){

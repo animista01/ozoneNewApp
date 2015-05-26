@@ -2,7 +2,7 @@ angular.module('scooop.controllers', [])
 
 .controller('ListsCtrl', function ($scope, $ionicModal, $timeout, $ionicSlideBoxDelegate, Channels, $ionicLoading){
     $scope.searchBy = function (){
-        console.log($scope.searchBy.channelId)
+        $ionicLoading.show();
         if($scope.searchBy.channelId){
             var result = Channels.getChannelById($scope.searchBy.channelId);
             result.then(function (data){
@@ -27,32 +27,32 @@ angular.module('scooop.controllers', [])
         }
     }
 
-	$scope.resources = [
-		{
-			'type': 'image',
-			'src': 'http://ionicframework.com/img/docs/nevermind.jpg',
-            'duration': 5000
-		}, {
-            'type': 'video',
-            'src': 'img/coffee.MOV'
-        }, {
-			'type': 'image',
-			'src': 'img/pic2.jpg',
-            'duration': 10000
-		}, {
-			'type': 'image',
-			'src': 'img/pic3.jpg',
-            'duration': 12000
-		}, {
-            'type': 'video',
-            'src': 'img/coffee.MOV'
-        }
-	];
+	// $scope.resources = [
+	// 	{
+	// 		'type': 'image',
+	// 		'src': 'http://ionicframework.com/img/docs/nevermind.jpg',
+ //            'duration': 5000
+	// 	}, {
+ //            'type': 'video',
+ //            'src': 'img/coffee.MOV'
+ //        }, {
+	// 		'type': 'image',
+	// 		'src': 'img/pic2.jpg',
+ //            'duration': 10000
+	// 	}, {
+	// 		'type': 'image',
+	// 		'src': 'img/pic3.jpg',
+ //            'duration': 12000
+	// 	}, {
+ //            'type': 'video',
+ //            'src': 'img/coffee.MOV'
+ //        }
+	// ];
 
 	$scope.mediaToShow = {};
 	$scope.showMedia = function (){
+        $ionicLoading.show();
         $scope.showModal('templates/media-popover.html');
-        $scope.player(0);
     }
 
     $scope.showModal = function (templateUrl){
@@ -62,6 +62,7 @@ angular.module('scooop.controllers', [])
         }).then(function (modal){
             $scope.modal = modal;
             $scope.modal.show();
+            $timeout(function(){ $scope.player(0);}, 100);
         });
     }
     // Close the modal
@@ -71,9 +72,21 @@ angular.module('scooop.controllers', [])
     };
 
     $scope.player = function (index){
-        console.log($scope.resources[index])
-        if($scope.resources[index].type === "video"){
+        console.log($scope.playlist[$scope.searchBy.channelId][index])
+        if($scope.playlist[$scope.searchBy.channelId][index].tipo === "image"){
+            $ionicLoading.hide();
+
+            $timeout(function(){
+                var position = $ionicSlideBoxDelegate.currentIndex();
+                var total = $ionicSlideBoxDelegate.slidesCount();
+                //Aun queda media
+                if( (total - position) > 1 ){
+                    $ionicSlideBoxDelegate.next();
+                }
+            }, $scope.playlist[$scope.searchBy.channelId][index].duration);
+        }else{
             var video = document.getElementById(index);
+            $ionicLoading.hide();
             video.play();
             video.onended = function (e){
                 var position = $ionicSlideBoxDelegate.currentIndex();
@@ -83,15 +96,6 @@ angular.module('scooop.controllers', [])
                     $ionicSlideBoxDelegate.next();
                 }
             };
-        }else{
-            $timeout(function(){
-                var position = $ionicSlideBoxDelegate.currentIndex();
-                var total = $ionicSlideBoxDelegate.slidesCount();
-                //Aun queda media
-                if( (total - position) > 1 ){
-                    $ionicSlideBoxDelegate.next();
-                }
-            }, $scope.resources[index].duration);
         }
     }
 })

@@ -67,4 +67,9 @@ angular.module('scooop', ['ionic', 'scooop.controllers', 'scooop.services'])
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/lists');
-});
+})
+.filter('trusted', ['$sce', function ($sce) {
+  return function(url) {
+    return $sce.trustAsResourceUrl(url);
+  };
+}]);
